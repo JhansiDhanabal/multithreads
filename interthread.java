@@ -1,24 +1,29 @@
 package multithreading;
 public class interthread {
     public static void main(String[] args) {
+        Thread t=new Thread();
+        newthread obj=new newthread("one");
+        newthread obj1=new newthread("two");
         try
-        {
-            newthread obj=new newthread("one");
+        {            
             Thread.sleep(1000);
             obj.my_suspend();
             System.out.println("one is suspended");
             Thread.sleep(1000);
-            obj.myresume();
-            System.out.println("one is resumed");
-            Thread.sleep(1000);
-            obj.my_suspend();
-            System.out.println("one is suspended");
+            obj1.my_suspend();
+            System.out.println("two is suspended");
             Thread.sleep(1000);
             obj.myresume();
             System.out.println("one is resumed");
+            Thread.sleep(1000);
+            obj1.myresume();
+            System.out.println("two is resumed");
             Thread.sleep(1000);
             obj.my_stop();
             System.out.println("one is stoped");
+            Thread.sleep(1000);
+            obj1.my_stop();
+            System.out.println("two is stoped");
         }
         catch(InterruptedException e)
         {
@@ -29,8 +34,8 @@ public class interthread {
 }
 class newthread implements Runnable
 {
-    String name;
-    Thread t;
+    public String name;
+    public Thread t;
     boolean susp=false,stop=false;
     newthread(String n)
     {
@@ -59,16 +64,16 @@ class newthread implements Runnable
             System.out.println(e);
         }
     }
-    synchronized void my_suspend()
+    public synchronized void my_suspend()
     {
-                susp=true;    
+                susp=true;   
     }
-    synchronized void myresume()
+    public synchronized void myresume()
     {
                 susp=false;
                 notify();
     }
-    synchronized void my_stop()
+    public synchronized void my_stop()
     {
                 susp=false;
                 stop=true;
